@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillUp Circle - Dashboard</title>
+  <!-- Favicon / Browser Tab Logo -->
+  <link rel="icon" type="image/jpeg" href="https://i.pinimg.com/736x/b5/ba/eb/b5baeb49d5e8dc8a107dbe2b1bfecc1c.jpg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen">
+
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md px-4 sm:px-8 py-3.5 flex items-center justify-between">
+    <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='dashboard.html'">
+      <!-- Brand Logo Image -->
+      <img src="https://i.pinimg.com/736x/b5/ba/eb/b5baeb49d5e8dc8a107dbe2b1bfecc1c.jpg" alt="SkillUp Logo" class="w-9 h-9 rounded-xl object-cover border border-slate-700 shadow-lg shadow-blue-500/20">
+      <span class="text-white font-extrabold text-base tracking-wide">SKILLUP <span class="text-blue-500">CIRCLE</span></span>
+    </div>
+
+    <div class="flex items-center space-x-3">
+      <span id="role-tag" class="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border"></span>
+      <span id="user-display-name" class="text-xs font-semibold text-slate-200">User</span>
+      <button onclick="logout()" class="text-slate-400 hover:text-red-400 text-sm transition p-1" title="Sign Out"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+    
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Welcome, <span id="welcome-name" class="text-blue-400">Student</span> 👋</h1>
+        <p class="text-xs text-slate-400 mt-1">Department: <strong id="user-branch-badge" class="text-blue-400 uppercase">AI & DS</strong> — Select a course module below.</p>
+      </div>
+
+      <div id="admin-tabs" class="hidden flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs font-semibold">
+        <button id="btn-courses" onclick="switchTab('courses')" class="px-4 py-2 rounded-lg bg-blue-600 text-white shadow">Course Modules</button>
+        <button id="btn-admin" onclick="switchTab('admin')" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition">Admin Panel (<span id="pending-badge">0</span>)</button>
+      </div>
+    </div>
+
+    <!-- COURSE CARDS -->
+    <div id="tab-courses-view" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- GATE Card -->
+      <div onclick="goToModule('gate')" class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:scale-[1.02] transition cursor-pointer group">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+            <i class="fa-solid fa-book-open"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">GATE</h3>
+          <p class="text-xs font-medium text-slate-300 leading-relaxed mb-6">📘 <strong>GATE</strong> — Complete 7-Section Syllabus & Roadmap customized for your selected department.</p>
+        </div>
+        <button class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2">Open module <i class="fa-solid fa-arrow-right text-[10px]"></i></button>
+      </div>
+
+      <!-- NPTEL Card -->
+      <div onclick="goToModule('nptel')" class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:scale-[1.02] transition cursor-pointer group">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-sky-600/20 text-sky-400 border border-sky-500/30 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+            <i class="fa-solid fa-ribbon"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">NPTEL</h3>
+          <p class="text-xs font-medium text-slate-300 leading-relaxed mb-6">🎓 <strong>NPTEL</strong> — Learn from IIT professors. Strengthen your resume.</p>
+        </div>
+        <button class="w-full py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2">Open module <i class="fa-solid fa-arrow-right text-[10px]"></i></button>
+      </div>
+
+      <!-- Communication Skills Card -->
+      <div onclick="goToModule('comm')" class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:scale-[1.02] transition cursor-pointer group">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
+            <i class="fa-solid fa-message"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Communication Skills</h3>
+          <p class="text-xs font-medium text-slate-300 leading-relaxed mb-6">🎤 <strong>Communication</strong> — Speak confidently. Crack interviews.</p>
+        </div>
+        <button class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2">Open module <i class="fa-solid fa-arrow-right text-[10px]"></i></button>
+      </div>
+
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="tab-admin-view" class="hidden glass rounded-2xl p-4 sm:p-6 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-white"><i class="fa-solid fa-users-gear text-blue-400 mr-2"></i> Registered Students & Department List</h3>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 text-slate-400 uppercase text-[10px]">
+              <th class="p-3">Student Name</th>
+              <th class="p-3">Email & Roll No.</th>
+              <th class="p-3">Department Branch</th>
+              <th class="p-3">Status</th>
+            </tr>
+          </thead>
+          <tbody id="admin-table-body" class="divide-y divide-slate-800 text-slate-300">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
